@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private HttpHeaders headers;
 
     @Value("${validation.email.regex}")
     private String emailRegex;
@@ -57,6 +61,7 @@ public class UserServiceImpl implements UserService {
                 .created(saveUser.getCreateAt())
                 .modified(saveUser.getModified())
                 .last_login(saveUser.getLastLogin())
+                .token(headers.get("Authorization").get(0))
                 .isActive(saveUser.isActive())
                 .build();
         log.info("[createUser] *Successful Operation* response object: {}", response.toString());

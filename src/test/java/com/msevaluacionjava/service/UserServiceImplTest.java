@@ -1,5 +1,6 @@
 package com.msevaluacionjava.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.msevaluacionjava.entity.CreateUserRequest;
 import com.msevaluacionjava.entity.CreateUserResponse;
 import com.msevaluacionjava.entity.Phone;
@@ -7,12 +8,12 @@ import com.msevaluacionjava.entity.User;
 import com.msevaluacionjava.exception.BusinessException;
 import com.msevaluacionjava.exception.RequestException;
 import com.msevaluacionjava.repository.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -29,6 +30,9 @@ class UserServiceImplTest {
 
     @Mock
     PasswordEncoder passwordEncoder;
+
+    @Mock
+    private HttpHeaders headers;
 
     @Mock
     private UserRepository userRepository;
@@ -56,6 +60,7 @@ class UserServiceImplTest {
 
     @Test
     void createUserSuccess() {
+        when(headers.get("Authorization")).thenReturn(Collections.singletonList("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjcmlzdG9waGVyTXVub3oiLCJpYXQiOjE2Nzk2MzQyMzksImV4cCI6MTY3OTYzNTEzOX0.Csrr27z9BJg_XcHy__5sRe8yJJIqjcDJAswpBQHTTK9JZ1oUVySsd6XMGswEdqjP4SLnOP8-PJvEFYobnpxp3w"));
         when(passwordEncoder.encode(anyString())).thenReturn("$2a$10$sL78ECqoetLSJmkaM8P7zecrx7Nt4kD4fTL4p7TRPaLnsV2d.OKue");
         when(objectMapper.convertValue(anyObject(), any(Class.class))).thenReturn(getDefaultUser());
         when(userRepository.findByEmail("")).thenReturn(getDefaultUser());
