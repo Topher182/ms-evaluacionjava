@@ -6,7 +6,7 @@ Microservicio que consiste en crear y listar usuarios mediante operaciones prote
 
 Una vez que levanta el presente microservicio, se insertan por defecto en BD 3 roles (ADMIN, MANAGER y LEADER), además con el fin de permitir realizar las pruebas posteriores, se inserta por defecto un usuario capaz de solicitar un token (cristopherMunoz) el cual cuenta con roles de ADMIN y MANAGER
 
-A continuacióna se presenta el diagrama de secuencia para la operación de crear usuario. En él se observa que para realizar una operación, primero se debe solicitar un token, y luego realizar la operación.
+A continuación se presenta el diagrama de secuencia para la operación de crear usuario. En él se observa que para realizar una operación, primero se debe solicitar un token, y luego realizar la operación.
 ![sequence_diagram.png](files%2Fsequence_diagram.png)
 
 **Cliente**: Aplicación cliente que requiere crear un usuario
