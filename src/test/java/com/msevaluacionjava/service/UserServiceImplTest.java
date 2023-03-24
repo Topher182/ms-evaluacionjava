@@ -5,6 +5,7 @@ import com.msevaluacionjava.entity.CreateUserResponse;
 import com.msevaluacionjava.entity.Phone;
 import com.msevaluacionjava.entity.User;
 import com.msevaluacionjava.exception.BusinessException;
+import com.msevaluacionjava.exception.RequestException;
 import com.msevaluacionjava.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -65,7 +66,7 @@ class UserServiceImplTest {
 
     @Test
     void createUserWithInvalidEmailFormat() {
-        Exception exception = Assertions.assertThrows(BusinessException.class, () ->
+        Exception exception = Assertions.assertThrows(RequestException.class, () ->
                 userService.createUser(getCreateUserRequest("juan@.com", "JuanRodri123#")));
         String errorMessage = exception.getMessage();
         Assertions.assertNotNull(errorMessage);
@@ -79,12 +80,12 @@ class UserServiceImplTest {
                 userService.createUser(getCreateUserRequest("juan@rodriguez.org", "JuanRodri123#")));
         String errorMessage = exception.getMessage();
         Assertions.assertNotNull(errorMessage);
-        Assertions.assertEquals(errorMessage, "Email ya existe");
+        Assertions.assertEquals("Email ya existe", errorMessage);
     }
 
     @Test
     void createUserWithInvalidPassword() {
-        Exception exception = Assertions.assertThrows(BusinessException.class, () ->
+        Exception exception = Assertions.assertThrows(RequestException.class, () ->
                 userService.createUser(getCreateUserRequest("juan@rodriguez.org", "Juan")));
         String errorMessage = exception.getMessage();
         Assertions.assertNotNull(errorMessage);

@@ -33,46 +33,46 @@ class UserControllerTest {
     }
 
     @Test
-    public void createUserSuccess() {
+    void createUserSuccess() {
         ResponseEntity<CreateUserResponse> response = userController.createUser(getCreateUserRequest(), "Bearer token");
         Assertions.assertNotNull(response);
-        Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+        Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
-    public void getUsersFoundsSuccess() {
+    void getUsersFoundsSuccess() {
         when(userService.getUsers()).thenReturn(Collections.singletonList(getDefaultUser()));
         ResponseEntity<List<User>> response = userController.getUsers("Bearer token");
         Assertions.assertNotNull(response);
-        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertNotNull(response.getBody());
     }
 
     @Test
-    public void getUsersNotFoundsSuccess() {
+    void getUsersNotFoundsSuccess() {
         when(userService.getUsers()).thenReturn(Collections.emptyList());
         ResponseEntity<List<User>> response = userController.getUsers("Bearer token");
         Assertions.assertNotNull(response);
-        Assertions.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         Assertions.assertTrue(response.getBody().isEmpty());
     }
 
     @Test
-    public void getUserByIdFoundSuccess() {
+    void getUserByIdFoundSuccess() {
         when(userService.getUserById(anyString())).thenReturn(Optional.of(getDefaultUser()));
         ResponseEntity<User> response = userController.getUserById("dca8e656-8a32-11ed-a1eb-0242ac120002","Bearer token");
         Assertions.assertNotNull(response);
-        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertNotNull(response.getBody());
     }
 
     @Test
-    public void getUserByIdNotFoundSuccess() {
+    void getUserByIdNotFoundSuccess() {
         when(userService.getUserById(anyString())).thenReturn(Optional.empty());
         ResponseEntity<User> response = userController.getUserById("dca8e656-8a32-11ed-a1eb-0242ac120002", "Bearer token");
         Assertions.assertNotNull(response);
-        Assertions.assertEquals(response.getStatusCode(), HttpStatus.NO_CONTENT);
-        Assertions.assertEquals(response.getBody(), Optional.empty());
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        Assertions.assertEquals(Optional.empty(), response.getBody());
     }
 
     CreateUserRequest getCreateUserRequest() {

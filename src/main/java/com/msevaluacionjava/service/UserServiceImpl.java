@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
         Pattern pattern = Pattern.compile(passwordRegex);
         Matcher matcher = pattern.matcher(password.trim());
         if (!matcher.matches()) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST, invalidPasswordErrorMessage);
+            throw new RequestException(invalidPasswordErrorMessage);
         }
     }
 }
